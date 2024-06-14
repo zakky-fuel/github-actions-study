@@ -39,7 +39,7 @@ jobs:
         run: |
           echo ${{ steps.var.outputs.TAGS }}
           ECR_PHP="https://ecr.com"
-          echo ${{ steps.var.TAGS }} | jq -R 'split(",") | map("'$ECR_PHP'/" + .) | join(",")'
+          echo ${{ steps.var.outputs.TAGS }} | jq -R 'split(",") | map("'$ECR_PHP'/" + .) | join(",")'
 
 
       - name: DUMP params
