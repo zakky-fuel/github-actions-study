@@ -30,4 +30,3 @@ jobs:
         run: |
           echo ${{ github }}
           echo $GITHUB_SHA
-          echo ${{ GITHUB_SHA }}
