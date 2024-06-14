@@ -35,12 +35,13 @@ jobs:
           echo $GITHUB_SHA
           echo ${{ github.sha }}
           SHA_SHORT=${GITHUB_SHA:0:8}
+          echo "1,2,3" | jq -R -c 'split(",")'
           echo ${SHA_SHORT}
           PATH="http://a.c/aaaa"
           TAGS="${{ matrix.version }},$SHA_SHORT"
           echo "${PATH}"
-          echo "${{ matrix.version }},$SHA_SHORT"
           echo ${TAGS}
+          echo "1,2,3" | jq -R -c 'split(",")'
           echo ${TAGS} | jq -R 'split(",")'
           echo ${TAGS} | jq -R 'split(",") | map("'$PATH'/" + .) | join(",")'
 
