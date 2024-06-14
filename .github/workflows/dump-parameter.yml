@@ -41,6 +41,8 @@ jobs:
           echo ${SHA_SHORT}
           PATH="http://a.c/aaaa"
           TAGS="${{ env.VER }},$SHA_SHORT"
+          echo "---->>>"
+          echo ${TAGS}
           echo "1,2,3" | jq -R -c 'split(",")'
           echo ${TAGS}
           TAGS="${{ matrix.version }},$SHA_SHORT"
