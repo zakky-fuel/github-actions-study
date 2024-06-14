@@ -38,9 +38,9 @@ jobs:
           echo ${SHA_SHORT}
           PATH="http://a.c/aaaa"
           echo "${PATH}"
-          echo "${{ matrix.version }},$SHA"
-          echo "${{ matrix.version }},$SHA" | jq -R 'split(",")'
-          echo "${{ matrix.version }},$SHA" | jq -R 'split(",") | map("'$PATH'/" + .) | join(",")'
+          echo "${{ matrix.version }},$SHA_SHORT"
+          echo "${{ matrix.version }},$SHA_SHORT" | jq -R 'split(",")'
+          echo "${{ matrix.version }},$SHA_SHORT" | jq -R 'split(",") | map("'$PATH'/" + .) | join(",")'
 
       - name: DUMP params
         run: |
