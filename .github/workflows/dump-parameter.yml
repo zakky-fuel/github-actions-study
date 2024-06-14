@@ -42,7 +42,7 @@ jobs:
       - name: create TAGS
         id: tag
         run: |
-          echo "TAGS=$(echo "${{ steps.env.outputs.TAGS }}" | jq -R 'split(",") | map("${{ steps.env.outputs.ECR_PHP }}:" + .) | join(",")')"
+          echo "TAGS=$(echo "${{ steps.env.outputs.TAGS }}" | jq -R 'split(",") | map("${{ steps.env.outputs.ECR_PHP }}:" + .) | join(",")')" >> $GITHUB_OUTPUT
 
       - name: echo vars
         run: |
