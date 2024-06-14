@@ -40,6 +40,7 @@ jobs:
           TAGS="${{ matrix.version }},$SHA_SHORT"
           echo "${PATH}"
           echo "${{ matrix.version }},$SHA_SHORT"
+          echo ${TAGS}
           echo ${TAGS} | jq -R 'split(",")'
           echo ${TAGS} | jq -R 'split(",") | map("'$PATH'/" + .) | join(",")'
 
