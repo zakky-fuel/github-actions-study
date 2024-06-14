@@ -31,4 +31,3 @@ jobs:
           echo ${{ toJson(github) }}
           echo $GITHUB_SHA
           echo ${{ github.sha }}
-          echo ${{ toJson(jobs) }}
