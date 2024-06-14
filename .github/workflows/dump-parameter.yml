@@ -29,17 +29,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: DUMP params
-        run: |
-          echo '${{ toJSON(github) }}'
-
       - name: execute jq
         run: |
+          echo "1,2,3" | jq -R -c 'split(",")'
           echo $GITHUB_SHA
           echo ${{ github.sha }}
           SHA_SHORT=${GITHUB_SHA:0:8}
           PATH="http://a.c/aaaa"
-          echo "1,2,3" | jq -R  'split(",")'
           echo "${{ matrix.version }},$SHA" | jq -R 'split(",") | map("'$PATH'/" + .) | join(",")'
 
+      - name: DUMP params
+        run: |
+          echo '${{ toJSON(github) }}'
