@@ -12,7 +12,8 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+env:
+  IMAGE_NAME: iiii
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -29,18 +30,23 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - name: execute jq
-        id: var
+      - name: Set ENV
+        id: env
         run: |
-          SHA_SHORT=${GITHUB_SHA:0:8}
-          echo ${SHA_SHORT}
-          echo "TAGS=${{ matrix.version }},$SHA_SHORT" >> $GITHUB_OUTPUT
-      - name: execute jq(again)
-        run: |
-          echo ${{ steps.var.outputs.TAGS }}
-          ECR_PHP="https://ecr.com"
-          echo ${{ steps.var.outputs.TAGS }} | jq -R 'split(",") | map("'$ECR_PHP'/" + .) | join(",")'
+          SHA=${GITHUB_SHA:0:8}
+          ECR_ROOT="xxxx.dkr.ecr.ap-northeast-1.amazonaws.com"
+          echo "ECR_PHP=${ECR_ROOT}/${{ env.IMAGE_NAME }}" >> $GITHUB_OUTPUT
+          echo "SHA=${SHA}" >> $GITHUB_OUTPUT
+          echo "TAGS=${{ matrix.version }},$SHA"
 
+      - name: create TAGS
+        id: tag
+        run: |
+          echo "TAGS=$(echo "${{ steps.env.outputs.TAGS }}" | jq -R 'split(",") | map("${{ steps.env.outputs.ECR_PHP }}:" + .) | join(",")')"
+
+      - name: echo vars
+        run: |
+          echo ${{ steps.tag.outputs.TAGS }}
 
       - name: DUMP params
         run: |
