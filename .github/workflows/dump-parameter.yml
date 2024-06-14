@@ -40,8 +40,6 @@ jobs:
           echo "1,2,3" | jq -R -c 'split(",")'
           echo ${SHA_SHORT}
           PATH="http://a.c/aaaa"
-          echo ${{ matrix.version }}
-          echo "1,2,3" | jq -R -c 'split(",")'
           TAGS="${{ env.VER }},$SHA_SHORT"
           echo "1,2,3" | jq -R -c 'split(",")'
           echo ${TAGS}
