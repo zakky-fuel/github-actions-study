@@ -37,7 +37,7 @@ jobs:
           echo "TAGS=${{ matrix.version }},$SHA_SHORT" >> $GITHUB_OUTPUT
       - name: execute jq(again)
         run: |
-          echo ${{ steps.var.TAGS }}
+          echo ${{ steps.var.outputs.TAGS }}
           ECR_PHP="https://ecr.com"
           echo ${{ steps.var.TAGS }} | jq -R 'split(",") | map("'$ECR_PHP'/" + .) | join(",")'
 
