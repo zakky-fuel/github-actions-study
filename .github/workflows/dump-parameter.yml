@@ -30,28 +30,17 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: execute jq
-        env:
-          VER: ${{ matrix.version }}
+        id: var
         run: |
-          echo "1,2,3" | jq -R -c 'split(",")'
-          echo $GITHUB_SHA
-          echo ${{ github.sha }}
           SHA_SHORT=${GITHUB_SHA:0:8}
-          echo "1,2,3" | jq -R -c 'split(",")'
           echo ${SHA_SHORT}
-          PATH="http://a.c/aaaa"
-          TAGS="${{ env.VER }},$SHA_SHORT"
-          echo "---->>>"
-          echo ${TAGS}
-          echo "1,2,3" | jq -R -c 'split(",")'
-          echo ${TAGS}
-          TAGS="${{ matrix.version }},$SHA_SHORT"
-          echo "1,2,3" | jq -R -c 'split(",")'
-          echo "${PATH}"
-          echo ${TAGS}
-          echo "1,2,3" | jq -R -c 'split(",")'
-          echo ${TAGS} | jq -R 'split(",")'
-          echo ${TAGS} | jq -R 'split(",") | map("'$PATH'/" + .) | join(",")'
+          echo "TAGS=${{ matrix.version }},$SHA_SHORT" >> $GITHUB_OUTPUT
+      - name: execute jq(again)
+        run: |
+          echo ${{ steps.var.TAGS }}
+          ECR_PHP="https://ecr.com"
+          echo ${{ steps.var.TAGS }} | jq -R 'split(",") | map("'$ECR_PHP'/" + .)
+
 
       - name: DUMP params
         run: |
